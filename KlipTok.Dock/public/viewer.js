@@ -21,10 +21,12 @@ function createRequest(type, method) {
     }
 }
 
-function setAuth(token) {
+function setAuth(token, helixToken) {
     Object.keys(requests).forEach((req) => {
         twitch.rig.log('Setting auth headers');
-        requests[req].headers = { 'Authorization': 'Bearer ' + token }
+        requests[req].headers = { 
+					'Authorization': 'Bearer ' + token, 
+					'x-helix-access-token': helixToken };
     });
 }
 
@@ -40,7 +42,7 @@ twitch.onAuthorized(function(auth) {
     // enable the button
     $('#cycle').removeAttr('disabled');
 
-    setAuth(token);
+    setAuth(token, auth.helixToken);
     $.ajax(requests.get);
 });
 
