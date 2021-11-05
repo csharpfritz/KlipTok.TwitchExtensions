@@ -57,9 +57,7 @@ const serverOptions = {
   host: 'localhost',
   port: 8081,
   routes: {
-    cors: {
-      origin: ['*'],
-    },
+    cors: false,
   },
 };
 const serverPathRoot = path.resolve(__dirname, '..', 'conf', 'server');
@@ -130,6 +128,9 @@ function verifyAndDecode(header) {
 }
 
 async function loadChannelData(req) {
+
+	console.log("Loading channel data");
+
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 	const helixToken = req.headers['x-helix-access-token'];

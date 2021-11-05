@@ -2,31 +2,31 @@ var token = "";
 var tuid = "";
 var ebs = "";
 
+if (twitch == null) twitch = { rig: console };
+
 // because who wants to type this every time?
 var twitch = window.Twitch.ext;
 
 // create the request options for our Twitch API calls
 var requests = {
-    set: createRequest('POST', 'cycle'),
-    get: createRequest('GET', 'query')
+    get: createRequest('GET', 'dashboard')
 };
 
 function createRequest(type, method) {
 
     return {
         type: type,
-        url: location.protocol + '//localhost:8081/color/' + method,
-        success: updateBlock,
-        error: logError
+        url: 'https://localhost:8081/dashboard'
     }
 }
 
 function setAuth(token, helixToken) {
     Object.keys(requests).forEach((req) => {
-        twitch.rig.log('Setting auth headers');
+        twitch.rig.log(`Setting auth headers with a token of length ${token.length} for ${req}`);
         requests[req].headers = { 
 					'Authorization': 'Bearer ' + token, 
-					'x-helix-access-token': helixToken };
+					'x-helix-access-token': helixToken 
+				};
     });
 }
 
@@ -34,25 +34,65 @@ twitch.onContext(function(context) {
     twitch.rig.log(context);
 });
 
-twitch.onAuthorized(function(auth) {
+twitch.onAuthorized(async function(auth) {
     // save our credentials
     token = auth.token;
     tuid = auth.userId;
 
-    // enable the button
-    $('#cycle').removeAttr('disabled');
+		twitch.rig.log("Twitch authenticated, calling localhost");
 
-    setAuth(token, auth.helixToken);
-    $.ajax(requests.get);
+		var response = await fetch("https://localhost:8081/dashboard", {
+			method: "GET",
+			credentials: 'include',
+			headers: {
+				Fritz: "Is Frustrated"
+			// 'Authorization': 'Bearer FOO' // + token,
+				// 'x-helix-access-token': "BAR" //auth.token
+			}
+		});	
+		var text = await response.text();
+		twitch.rig.log(text);
+
+		// var ajaxOptions = {
+		// 	type: "GET",
+		// 	url: 'https://localhost:8081/dashboard',
+		// 	cache: false,
+		// 	beforeSend: function (xhr) {
+		// 		// xhr.setRequestHeader ("Authorization", "Bearer FOO");
+		// 		// xhr.setRequestHeader ("x-helix-access-token", "FOO");
+		// 	},
+		// 	success: function(data) {
+		// 		twitch.rig.log("Success");
+		// 		twitch.rig.log(data);
+		// 	},
+		// 	error: function(data) {
+		// 		twitch.rig.log("Error");
+		// 		twitch.rig.log(data);
+		// 	}
+		// };
+
+		// headers: {
+		// 	// 'Authorization': 'Bearer ' + 'foo',
+		// 	// 'x-helix-access-token': 'FOO' //auth.helixToken 
+		// },
+
+		$.ajax(ajaxOptions).done(function(data) {
+			twitch.rig.log("Done");
+			twitch.rig.log(data);	
+		}).fail(function(data) {
+			twitch.rig.log("Fail");
+			twitch.rig.log(data);
+		});
+
 });
 
-function updateBlock(hex) {
+function updateBlock(foo) {
     twitch.rig.log('Updating block color');
-    $('#color').css('background-color', hex);
+//    $('#color').css('background-color', hex);
 }
 
 function logError(_, error, status) {
-  twitch.rig.log('EBS request returned '+status+' ('+error+')');
+  twitch.rig.log('EBS request returned an error: '+status+' ('+error+')');
 }
 
 function logSuccess(hex, status) {
@@ -63,16 +103,9 @@ function logSuccess(hex, status) {
 
 $(function() {
 
-    // when we click the cycle button
-    $('#cycle').click(function() {
-        if(!token) { return twitch.rig.log('Not authorized'); }
-        twitch.rig.log('Requesting a color cycle');
-        $.ajax(requests.set);
-    });
-
-    // listen for incoming broadcast message from our EBS
-    twitch.listen('broadcast', function (target, contentType, color) {
-        twitch.rig.log('Received broadcast color');
-        updateBlock(color);
-    });
+    //   // listen for incoming broadcast message from our EBS
+    // twitch.listen('broadcast', function (target, contentType, color) {
+    //     twitch.rig.log('Received broadcast color');
+    //     updateBlock(color);
+    // });
 });
