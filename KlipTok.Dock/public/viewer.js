@@ -41,18 +41,22 @@ twitch.onAuthorized(async function(auth) {
 
 		twitch.rig.log("Twitch authenticated, calling localhost");
 
-		var response = await fetch("https://localhost:8081/dashboard", {
+		try {
+		var response = await fetch("http://localhost:8081/dashboard", {
 			method: "GET",
-			credentials: 'include',
+			credentials: 'same-origin',
+			mode: 'cors',
 			headers: {
-				Fritz: "Is Frustrated"
-			// 'Authorization': 'Bearer FOO' // + token,
-				// 'x-helix-access-token': "BAR" //auth.token
+			 'Authorization': 'Bearer ' + token,
+			 'x-helix-access-token': auth.helixToken
 			}
 		});	
 		var text = await response.text();
 		twitch.rig.log(text);
-
+	} catch (e) 
+	{
+		twitch.rig.log(e);
+	}
 		// var ajaxOptions = {
 		// 	type: "GET",
 		// 	url: 'https://localhost:8081/dashboard',

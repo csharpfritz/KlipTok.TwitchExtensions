@@ -1,12 +1,13 @@
-import('node-fetch');
+//import('node-fetch');
 
-const fs = require('fs');
-const Hapi = require('hapi');
-const path = require('path');
 const Boom = require('boom');
-const color = require('color');
+const cors = require('cors');
+const express = require('express');
 const ext = require('commander');
+const fetch = require('node-fetch');
+const fs = require('fs');
 const jsonwebtoken = require('jsonwebtoken');
+const path = require('path');
 const request = require('request');
 
 require('dotenv').config();
@@ -62,31 +63,27 @@ const serverOptions = {
 };
 const serverPathRoot = path.resolve(__dirname, '..', 'conf', 'server');
 if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.key')) {
-  serverOptions.tls = {
+    serverOptions.tls = {
     // If you need a certificate, execute "npm run cert".
     cert: fs.readFileSync(serverPathRoot + '.crt'),
     key: fs.readFileSync(serverPathRoot + '.key'),
   };
 }
-const server = new Hapi.Server(serverOptions);
+const server = express();
 
-(async () => {
+server.use(cors({ origin: true }));
+// server.options("/*", function(req, res, next){
+//   res.header('Access-Control-Allow-Origin', 'localhost');
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+//   res.send(200);
+// });
 
   // Handle a viewer request to show dashboard data
-  server.route({
-    method: 'GET',
-    path: '/dashboard',
-    handler: loadChannelData,
-  });
+server.get('/dashboard', loadChannelData);
 
-  // Start the server.
-  await server.start();
-  console.log(STRINGS.serverStarted, server.info.uri);
-
-  // Periodically clear cool-down tracking to prevent unbounded growth due to
-  // per-session logged-out user tokens.
-  setInterval(() => { userCooldowns = {}; }, userCooldownClearIntervalMs);
-})();
+// Start the server.
+server.listen(serverOptions.port, () => console.log(STRINGS.serverStarted));
 
 function usingValue(name) {
   return `Using environment variable for ${name}`;
@@ -130,16 +127,28 @@ function verifyAndDecode(header) {
 async function loadChannelData(req) {
 
 	console.log("Loading channel data");
+  // console.log(req.headers);
 
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 	const helixToken = req.headers['x-helix-access-token'];
 
+  console.log(`Helix token: '${helixToken.length}'`);
+
   // Get the color for the channel from the payload and return it.
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+	const channelResponse = await fetch(`https://api.twitch.tv/helix/channels?broadcaster_id=${channelId}`,
+  {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Extension ' + helixToken,
+      'Client-Id': clientId
+     }
+  });
 
-	const channelResponse = await fetch(`https://api.twitch.tv/helix/channels?broadcaster_id=${channelId}`);
-	const channelDisplayName = (await response.json()).data[0].broadcaster_login;
+  console.log(await channelResponse.json());
+
+  const channelDisplayName = (await channelResponse.json()).data[0].broadcaster_login;
 
 	console.log(`Getting Dashboard data for Channel: ${channelDisplayName}`);
 
