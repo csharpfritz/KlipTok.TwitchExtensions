@@ -30,6 +30,7 @@ const STRINGS = {
   secretEnv: usingValue('secret'),
   clientIdEnv: usingValue('client-id'),
   ownerIdEnv: usingValue('owner-id'),
+	portEnv: usingValue('port'),
   serverStarted: 'Server running at %s',
   secretMissing: missingValue('secret', 'EXT_SECRET'),
   clientIdMissing: missingValue('client ID', 'EXT_CLIENT_ID'),
@@ -49,11 +50,14 @@ ext.
   option('-s, --secret <secret>', 'Extension secret').
   option('-c, --client-id <client_id>', 'Extension client ID').
   option('-o, --owner-id <owner_id>', 'Extension owner ID').
+  option('-p, --port <port>', 'Network port', 8081).
   parse(process.argv);
 
 const ownerId = getOption('ownerId', 'EXT_OWNER_ID');
 const secret = Buffer.from(getOption('secret', 'EXT_SECRET'), 'base64');
 const clientId = getOption('clientId', 'EXT_CLIENT_ID');
+const port = getOption('port', 'EXT_PORT');
+
 
 const serverOptions = {
 };
@@ -70,7 +74,7 @@ app.get('/dashboard', loadChannelData);
 var server = https.createServer(serverOptions, app);
 
 // Start the server.
-server.listen(8081);
+server.listen(port);
 console.log(STRINGS.serverStarted, server.address().port);
 
 function usingValue(name) {
