@@ -18,12 +18,12 @@ twitch.onAuthorized(async function(auth) {
 			var url = "https://api.twitch.tv/helix/users?id=" + auth.channelId;
 			var response = await fetch(url, {
 				headers: {
-					"Client-ID": "vqy8jhq1qgq3qx2v2j8e7hfk6zj9z0",
-					"Authorization": "Bearer " + helixToken
+					"Client-ID": "eakutjhdwh3m1p7vd7uodnvweuhzmz",
+					"Authorization": "Extension " + helixToken
 				}
 			});
 
-			document.getElementById("logo").href = "https://kliptok.com/" + response.data[0].display_name;
+			document.getElementById("logo").href = "https://kliptok.com/" + (await response.json()).data[0].display_name;
 
 		}
 
@@ -31,7 +31,7 @@ twitch.onAuthorized(async function(auth) {
 		twitch.rig.log("Twitch authenticated, calling localhost for channel: " + auth.channelId);
 
 		try {
-		var response = await fetch("http://localhost:8081/dashboard", {
+		var response = await fetch("https://localhost:8081/dashboard", {
 			method: "GET",
 			credentials: 'same-origin',
 			mode: 'cors',

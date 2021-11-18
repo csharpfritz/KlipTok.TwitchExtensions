@@ -6,6 +6,7 @@ const express = require('express');
 const ext = require('commander');
 const fetch = require('node-fetch');
 const fs = require('fs');
+const https = require('https');
 const jsonwebtoken = require('jsonwebtoken');
 const path = require('path');
 const request = require('request');
@@ -55,29 +56,22 @@ const secret = Buffer.from(getOption('secret', 'EXT_SECRET'), 'base64');
 const clientId = getOption('clientId', 'EXT_CLIENT_ID');
 
 const serverOptions = {
-  host: 'localhost',
-  port: 8081,
-  routes: {
-    cors: false,
-  },
 };
 const serverPathRoot = path.resolve(__dirname, '..', 'conf', 'server');
 if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.key')) {
-    serverOptions.tls = {
-    // If you need a certificate, execute "npm run cert".
-    cert: fs.readFileSync(serverPathRoot + '.crt'),
-    key: fs.readFileSync(serverPathRoot + '.key'),
-  };
+    serverOptions.cert = fs.readFileSync(serverPathRoot + '.crt');
+    serverOptions.key = fs.readFileSync(serverPathRoot + '.key');
 }
-const server = express();
 
-server.use(cors({ origin: true }));
+var app = express();
+app.use(cors({ origin: true }));
+app.get('/dashboard', loadChannelData);
 
-// Handle a viewer request to show dashboard data
-server.get('/dashboard', loadChannelData);
+var server = https.createServer(serverOptions, app);
 
 // Start the server.
-server.listen(serverOptions.port, () => console.log(STRINGS.serverStarted));
+server.listen(8081);
+console.log(STRINGS.serverStarted, server.address().port);
 
 function usingValue(name) {
   return `Using environment variable for ${name}`;
@@ -106,7 +100,7 @@ function getOption(optionName, environmentName) {
 
 // Verify the header and the enclosed JWT.
 function verifyAndDecode(header) {
-  if (header.startsWith(bearerPrefix)) {
+  if (header && header.startsWith(bearerPrefix)) {
     try {
       const token = header.substring(bearerPrefix.length);
       return jsonwebtoken.verify(token, secret, { algorithms: ['HS256'] });
