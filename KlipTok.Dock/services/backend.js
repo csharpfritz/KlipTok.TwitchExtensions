@@ -6,6 +6,7 @@ const express = require('express');
 const ext = require('commander');
 const fetch = require('node-fetch');
 const fs = require('fs');
+const http = require('http');
 const https = require('https');
 const jsonwebtoken = require('jsonwebtoken');
 const path = require('path');
@@ -71,7 +72,7 @@ var app = express();
 app.use(cors({ origin: true }));
 app.get('/dashboard', loadChannelData);
 
-var server = https.createServer(serverOptions, app);
+var server = (serverOptions.cert != null) ? https.createServer(serverOptions, app) : http.createServer(app);
 
 // Start the server.
 server.listen(port);

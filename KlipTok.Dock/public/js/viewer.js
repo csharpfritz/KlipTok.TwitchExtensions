@@ -31,14 +31,21 @@ twitch.onAuthorized(async function(auth) {
 		twitch.rig.log("Twitch authenticated, calling localhost for channel: " + auth.channelId);
 
 		try {
-		var response = await fetch("https://localhost:8081/dashboard", {
-			method: "GET",
-			credentials: 'same-origin',
-			mode: 'cors',
-			headers: {
-			 'Authorization': 'Bearer ' + token
-			}
-		});	
+
+			var response = await fetch("https://localhost:8082/dashboard", {
+				method: "GET",
+				credentials: 'include',
+				mode: 'no-cors',
+				headers: {
+				'Authorization': 'Bearer ' + token
+				}
+			});	
+		
+		} catch (e) 
+		{
+			twitch.rig.log(e);
+		}
+
 		var clippers = await response.json();
 		clippers = clippers.map(c => ({
 			...c, url: c.url || "icon.png"
@@ -49,10 +56,5 @@ twitch.onAuthorized(async function(auth) {
 		"{{/.}}";
 		var rendered = Mustache.render(template, clippers);
 		document.getElementById('mostViewedClippers').innerHTML = rendered;
-
-	} catch (e) 
-	{
-		twitch.rig.log(e);
-	}
 
 });

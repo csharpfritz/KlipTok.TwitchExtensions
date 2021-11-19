@@ -1,5 +1,7 @@
 FROM node:current-alpine3.12
 
+LABEL org.opencontainers.image.source https://github.com/csharpfritz/KlipTok.TwitchExtensions
+
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -17,5 +19,4 @@ RUN mkdir -p services
 COPY services/* services
 
 EXPOSE 8080
-# CMD ["ls", "services"]
 CMD [ "node", "services/backend.js", "-p", "8080" ]
