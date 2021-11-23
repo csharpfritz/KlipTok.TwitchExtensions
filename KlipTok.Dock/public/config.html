@@ -2,6 +2,17 @@
 <html>
 <head>
     <title>Config Page</title>
+		<style>
+
+			.dark * {
+				color: #fff;
+			}
+
+			.light * {
+				color: #000;
+			}
+
+		</style>
 </head>
 <body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
     <div id="app"></div>
@@ -9,9 +20,11 @@
     <!-- If you use any external libraries, such as jQuery, you must include
       them as part of your extension.  Twitch does not allow extensions to link
       to external libraries. -->
-    <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="config.js" type="text/javascript"></script>
-    <h2>Configure This</h2>
-    <p>Just kidding... hello world.</p>
+    <script src="js/config.js" type="text/javascript"></script>
+    <h2>KlipTok Dock Configuration</h2>
+    <p>To run this extension, your channel must be tracked on the KlipTok web application</p>
+		<p>
+			You can verify that your channel is being tracked at <a href="https://kliptok.com/FOO" id="kliptok_link" target="_blank">KlipTok.com</a>
+		</p>
 </body>
 </html>

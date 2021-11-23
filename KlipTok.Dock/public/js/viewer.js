@@ -1,6 +1,7 @@
 var token = "";
 var tuid = "";
-var ebs = "";
+var ebs = "https://kliptok-api.azurewebsites.net";
+
 
 if (twitch == null) twitch = { rig: console };
 
@@ -32,7 +33,7 @@ twitch.onAuthorized(async function(auth) {
 
 		try {
 
-			var response = await fetch("https://localhost:8081/dashboard", {
+			var response = await fetch(ebs + "/dashboard", {
 				method: "GET",
 				// credentials: 'include',
 				// mode: 'no-cors',

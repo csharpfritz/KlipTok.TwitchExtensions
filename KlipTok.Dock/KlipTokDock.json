@@ -8,6 +8,12 @@
       "isEphemeral": false,
       "isOrigin": true,
       "value": "https://localhost:8081"
+    },
+    {
+      "isAllowed": true,
+      "isEphemeral": false,
+      "isOrigin": false,
+      "value": "https://localhost:8082/dashboard"
     }
   ],
   "extensionViews": [
@@ -32,6 +38,28 @@
       "orientation": "Portrait",
       "type": "panel",
       "viewerType": "Logged-In Viewer"
+    },
+    {
+      "channelId": "96909659",
+      "configurationAnchor": "panel",
+      "displayChannelName": "csharpfritz",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "2",
+      "isPopout": false,
+      "label": "",
+      "linked": true,
+      "linkedUserId": "265737932",
+      "orientation": "Portrait",
+      "type": "config",
+      "viewerType": "Broadcaster"
     }
   ],
   "manifest": {
@@ -40,22 +68,28 @@
     "authorName": "Jeffrey T. Fritz ( @csharpfritz )",
     "bitsEnabled": false,
     "canInstall": true,
-    "configUrl": "https://localhost:8080/config.html",
+    "configUrl": "http://localhost:8080/config.html",
     "configurationLocation": "none",
-    "description": "KlipTok is a website that promotes Twitch clip sharing, discovery and interaction using social media friendly techniques including Likes and Comments.  With a powerful artificial intelligence feature, KlipTok can help you find Twitch clips and new channels that you will enjoy",
+    "description": "KlipTok is a website that promotes Twitch clip sharing, discovery and interaction using social media friendly techniques including Likes and Comments.  With a powerful artificial intelligence feature, KlipTok can help you find Twitch clips and new channels that you will enjoy.\n\nChannels must be tracked with KlipTok for this extension to work",
     "eulaTosUrl": "",
     "hasChatSupport": false,
-    "iconUrl": "",
-    "iconUrls": {},
+    "iconUrl": "https://extensions-discovery-images.twitch.tv/eakutjhdwh3m1p7vd7uodnvweuhzmz/0.0.1/logoad6be736-c384-403b-8cbe-e94a410e7eeb",
+    "iconUrls": {
+      "100x100": "https://extensions-discovery-images.twitch.tv/eakutjhdwh3m1p7vd7uodnvweuhzmz/0.0.1/logoad6be736-c384-403b-8cbe-e94a410e7eeb",
+      "24x24": "https://extensions-discovery-images.twitch.tv/eakutjhdwh3m1p7vd7uodnvweuhzmz/0.0.1/taskbar7ea03bee-6ace-4150-8daf-0f02126e779a",
+      "300x200": "https://extensions-discovery-images.twitch.tv/eakutjhdwh3m1p7vd7uodnvweuhzmz/0.0.1/discoveryabad8631-4f55-4e9a-a76f-39c43360b258"
+    },
     "id": "eakutjhdwh3m1p7vd7uodnvweuhzmz",
     "installationCount": -42,
     "liveConfigUrl": "",
     "name": "KlipTokDock",
     "panelHeight": 300,
-    "privacyPolicyUrl": "",
+    "privacyPolicyUrl": "https://kliptok.com/Privacy",
     "requestIdentityLink": false,
     "requiredBroadcasterAbilities": [],
-    "screenshotUrls": [],
+    "screenshotUrls": [
+      "https://extensions-discovery-images.twitch.tv/eakutjhdwh3m1p7vd7uodnvweuhzmz/0.0.1/screenshot1dd43ed5-ee0d-4a84-b89d-0bb4297709c2"
+    ],
     "sku": "",
     "state": "Testing",
     "subscriptionsSupportLevel": "none",
@@ -63,24 +97,26 @@
     "supportEmail": "info@kliptok.com",
     "vendorCode": "",
     "version": "0.0.1",
-    "viewerSummary": "",
-    "viewerUrl": "https://localhost:8080/panel.html",
+    "viewerSummary": "Display the users who have created clips with the most views on this channel, as tracked by KlipTok",
+    "viewerUrl": "http://localhost:8080/panel.html",
     "viewerUrls": {
-      "panel": "https://localhost:8080/panel.html"
+      "panel": "http://localhost:8080/panel.html"
     },
     "views": {
       "panel": {
-        "viewerUrl": "https://localhost:8080/panel.html",
+        "viewerUrl": "http://localhost:8080/panel.html",
         "height": 300,
-        "canLinkExternalContent": false
+        "canLinkExternalContent": true
       },
       "config": {
-        "viewerUrl": "https://localhost:8080/config.html",
+        "viewerUrl": "http://localhost:8080/config.html",
         "canLinkExternalContent": false
       }
     },
     "whitelistedConfigUrls": [],
-    "whitelistedPanelUrls": []
+    "whitelistedPanelUrls": [
+      "https://kliptok.com"
+    ]
   },
   "frontendCommand": "",
   "frontendFolderName": "public",

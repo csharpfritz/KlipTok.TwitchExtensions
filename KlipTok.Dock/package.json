@@ -20,9 +20,11 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
     "jsonwebtoken": "8.2.0",
     "mustache": "^4.2.0",
     "node-fetch": "^2.0.0",
+    "nodemon": "^2.0.15",
     "request": "^2.88.2",
     "selfsigned": "^1.10.11"
   }
