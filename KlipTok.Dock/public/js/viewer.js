@@ -32,10 +32,10 @@ twitch.onAuthorized(async function(auth) {
 
 		try {
 
-			var response = await fetch("https://localhost:8082/dashboard", {
+			var response = await fetch("https://localhost:8081/dashboard", {
 				method: "GET",
-				credentials: 'include',
-				mode: 'no-cors',
+				// credentials: 'include',
+				// mode: 'no-cors',
 				headers: {
 				'Authorization': 'Bearer ' + token
 				}

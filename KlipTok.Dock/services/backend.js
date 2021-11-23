@@ -69,7 +69,7 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 }
 
 var app = express();
-app.use(cors({ origin: true }));
+app.use(cors());
 app.get('/dashboard', loadChannelData);
 
 var server = (serverOptions.cert != null) ? https.createServer(serverOptions, app) : http.createServer(app);
