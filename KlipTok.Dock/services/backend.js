@@ -10,7 +10,6 @@ const http = require('http');
 const https = require('https');
 const jsonwebtoken = require('jsonwebtoken');
 const path = require('path');
-const request = require('request');
 
 require('dotenv').config();
 
