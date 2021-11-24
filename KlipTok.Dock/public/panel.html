@@ -1,55 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Viewer Page</title>
-		<style>
-			:root {
-				--purple: #5900db;
-			}
+	<title>Viewer Page</title>
+	<style>
+		:root {
+			--purple: #5900db;
+		}
 
-			li > img {
-				width: 30px;
-				height: 30px;
-				border-radius: 16px;
-				border: solid 2px var(--purple);
-				margin-right: 3px;
-			}
+		#panel_mostviewedclippers li>img {
+			width: 30px;
+			height: 30px;
+			border-radius: 16px;
+			border: solid 2px var(--purple);
+			margin-right: 3px;
+		}
 
-			ul {
-				padding: 0;
-				margin: 0;
-			}
+		#panel_mostviewedclippers ul {
+			padding: 0;
+			margin: 0;
+		}
 
-			li {
-				margin: 0;
-				display: flex;
-				align-items: center;
-			}
+		#panel_mostviewedclippers li {
+			margin: 0;
+			display: flex;
+			align-items: center;
+		}
 
-			li > span {
-				width: 14em;
-			}
+		#panel_mostviewedclippers li>span {
+			width: 14em;
+		}
 
-			#logo > img {
-				display: block;
-				margin: 0 auto;
-			}
-		</style>
+		#logo>img {
+			display: block;
+			margin: 0 auto;
+		}
+
+		#pivot {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-evenly;
+			margin-top: 4px;
+			width: 100%;
+		}
+		#pivot a {
+			text-decoration: none;
+			font-size: 0.7em;
+			color: #fafafa;
+		}
+		#pivot a.active {
+			color: yellow;
+			text-decoration: underline;
+		}
+	</style>
+	<link rel="stylesheet" href="css/kendo.common.min.css" />
+	<link rel="stylesheet" href="css/kendo.default.min.css" />
 </head>
-<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: var(--purple); color: #FFF">
-    <div id="app" class="full-height"></div>
-		
-    <a id="logo" href="" target="_blank"><img width="230" src="wordmark_subtitle.png" alt="KlipTok - Social Fun with Videos" /></a>
-    <p>Clippers with the most views:</p>
-    <div id="list">
-			<ul id="mostViewedClippers">
-				
-			</ul>
-    </div>
-		
-		<script rel="preload" src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
-		<script src="js/mustache.min.js"></script>
-		<script src="js/viewer.js" type="text/javascript"></script>
 
-	</body>
+<body style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: var(--purple); color: #FFF">
+	<div id="app" class="full-height"></div>
+
+	<a id="logo" href="" target="_blank"><img width="230" src="wordmark_subtitle.png"
+			alt="KlipTok - Social Fun with Videos" /></a>
+
+	<div id="pivot">
+		<a id="a_mostviewedclippers" class="active" href="#panel_mostviewedclippers">Most Viewed Clippers</a>
+		<a id="a_bydayofweek" href="#panel_clipsbydayofweek">Clips by Day of Week</a>
+	</div>
+
+	<div id="panel_mostviewedclippers">
+		<p>Clippers with the most views:</p>
+		<div id="list">
+			<ul id="mostViewedClippers">  
+
+			</ul>
+		</div>
+	</div> 
+
+	<div id="panel_clipsbydayofweek" style="width: 290px; display: none;">
+
+	</div>
+
+	<script rel="preload" src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
+	<script src="js/jquery.slim.min.js"></script>
+	<script src="js/kendo.custom.min.js"></script>
+	<script src="js/mustache.min.js"></script>
+	<script src="js/viewer.js" type="text/javascript"></script>
+
+</body>
+
 </html>

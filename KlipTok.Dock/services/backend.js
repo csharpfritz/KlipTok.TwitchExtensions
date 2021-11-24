@@ -121,6 +121,8 @@ async function loadChannelData(req, res) {
 	console.log("Loading channel data");
   // console.log(req.headers);
 
+	// TODO: Wrap with some caching per channel
+
   // Verify all requests.
   const payload = verifyAndDecode(req.headers.authorization);
 
@@ -128,6 +130,9 @@ async function loadChannelData(req, res) {
   const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
 	const channelResponse = await fetch(`https://kliptok.com/api/GetStreamerDashboardByChannelId/${channelId}`);
 
-	res.status(200).send((await channelResponse.json()).mostViewedClippers).end();
+
+	var channelData = await channelResponse.json();
+	var returnData = { mostViewedClippers: channelData.mostViewedClippers, clipsByDayOfWeek: channelData.clipsByDayOfWeek };
+	res.status(200).send(returnData).end();
 
 }

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 let client_id = 'eakutjhdwh3m1p7vd7uodnvweuhzmz';
-let ebs_domain = '589f-98-115-65-55.ngrok.io';
+let ebs_domain = 'localhost:8081';
 let public_folder = "/../public/";
 let port = 8080;
 

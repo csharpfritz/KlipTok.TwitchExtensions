@@ -96,7 +96,7 @@
     "summary": "Share information about Twitch clips using KlipTok",
     "supportEmail": "info@kliptok.com",
     "vendorCode": "",
-    "version": "0.0.1",
+    "version": "0.2.0",
     "viewerSummary": "Display the users who have created clips with the most views on this channel, as tracked by KlipTok",
     "viewerUrl": "http://localhost:8080/panel.html",
     "viewerUrls": {

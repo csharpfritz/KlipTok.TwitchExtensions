@@ -1,12 +1,34 @@
 var token = "";
 var tuid = "";
-var ebs = "https://kliptok-api.azurewebsites.net";
+var ebs = "https://localhost:8081";
+//var ebs = "https://kliptok-api.azurewebsites.net";
 
+// TODO: Cache data.. refresh daily?
 
 if (twitch == null) twitch = { rig: console };
 
 // because who wants to type this every time?
 var twitch = window.Twitch.ext;
+
+document.querySelectorAll("#pivot a").addEventListener("click", function (e) {
+		var href = e.target.getAttribute("href");
+		if (href.startsWith("#")) {
+				e.preventDefault();
+				var pivot = document.querySelector("#pivot");
+				var pivotItems = document.querySelectorAll("#pivot a");
+				for (var i = 0; i < pivotItems.length; i++) {
+						if (pivotItems[i].classList.contains("active")) {
+								pivotItems[i].classList.remove("active");
+						}
+				}
+
+				e.target.classList.add("active");
+
+				var pivotItem = document.querySelector(href);
+				pivotItem.classList.add("active");
+				pivot.scrollTop = pivotItem.offsetTop;
+		}
+});
 
 twitch.onAuthorized(async function(auth) {
     // save our credentials
@@ -47,7 +69,8 @@ twitch.onAuthorized(async function(auth) {
 			twitch.rig.log(e);
 		}
 
-		var clippers = await response.json();
+		var response = await response.json();
+		var clippers = response.mostViewedClippers;
 		clippers = clippers.map(c => ({
 			...c, url: c.url || "icon.png"
 		}));
@@ -58,4 +81,29 @@ twitch.onAuthorized(async function(auth) {
 		var rendered = Mustache.render(template, clippers);
 		document.getElementById('mostViewedClippers').innerHTML = rendered;
 
+		// Build the day of week chart with kendo
+		$("#panel_clipsbydayofweek").kendoChart({
+			title: {
+				text: "Clips by Day of Week"
+			},
+			legend: {
+				visible: false
+			},
+			series: [{
+				type: "radarColumn",
+				name: "Day of Week",
+				autoFit: true,
+				color: "#5900db",
+				data: response.clipsByDayOfWeek.map(x => x.count)
+			}],
+			categoryAxis: {
+				categories: [
+						"Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
+				]
+			},
+			valueAxis: {
+				visible: false
+			}
+		});
+		
 });
