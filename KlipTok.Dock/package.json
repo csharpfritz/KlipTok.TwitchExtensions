@@ -26,6 +26,6 @@
     "node-fetch": "^2.0.0",
     "nodemon": "^2.0.15",
     "selfsigned": "^1.10.11",
-    "twitchextensioncsp": "^1.0.0"
+    "twitchextensioncsp": "^1.0.1"
   }
 }
