@@ -21,11 +21,11 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mustache": "^4.2.0",
     "node-fetch": "^2.0.0",
     "nodemon": "^2.0.15",
-    "selfsigned": "^1.10.11"
+    "selfsigned": "^1.10.11",
+    "twitchextensioncsp": "^1.0.1"
   }
 }
