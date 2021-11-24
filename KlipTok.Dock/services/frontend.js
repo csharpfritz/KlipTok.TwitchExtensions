@@ -26,7 +26,7 @@ app.use(twitchextensioncsp({
     connectSrc: [
         ebs_domain
     ]
-});
+}));
 
 /*
 Setup a "Log" Event for file loading.
