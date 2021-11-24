@@ -1,5 +1,4 @@
-@echo off
-npm version %1 || true
+start /b npm version %1
 git add package.json
 git commit -m "Updated and tagging version %1"
 git tag %1
