@@ -53,6 +53,16 @@
 			color: yellow;
 			text-decoration: underline;
 		}
+
+		.hidden {
+			display: none;
+		}
+
+		.panel { 
+			width: 290px;
+			margin-top: 5px;
+		}
+
 	</style>
 	<link rel="stylesheet" href="css/kendo.common.min.css" />
 	<link rel="stylesheet" href="css/kendo.default.min.css" />
@@ -69,7 +79,7 @@
 		<a id="a_bydayofweek" href="#panel_clipsbydayofweek">Clips by Day of Week</a>
 	</div>
 
-	<div id="panel_mostviewedclippers">
+	<div id="panel_mostviewedclippers" class="panel">
 		<p>Clippers with the most views:</p>
 		<div id="list">
 			<ul id="mostViewedClippers">  
@@ -78,7 +88,7 @@
 		</div>
 	</div> 
 
-	<div id="panel_clipsbydayofweek" style="width: 290px; display: none;">
+	<div id="panel_clipsbydayofweek" class="panel hidden">
 
 	</div>
 

@@ -69,7 +69,8 @@ if (fs.existsSync(serverPathRoot + '.crt') && fs.existsSync(serverPathRoot + '.k
 
 var app = express();
 app.use(cors());
-app.get('/dashboard', loadChannelData);
+app.get('/dashboard', loadChannelDataOld);
+app.get('/dashboardAll', loadChannelData);
 
 var server = (serverOptions.cert != null) ? https.createServer(serverOptions, app) : http.createServer(app);
 
@@ -134,5 +135,21 @@ async function loadChannelData(req, res) {
 	var channelData = await channelResponse.json();
 	var returnData = { mostViewedClippers: channelData.mostViewedClippers, clipsByDayOfWeek: channelData.clipsByDayOfWeek };
 	res.status(200).send(returnData).end();
+
+}
+
+async function loadChannelDataOld(req, res) {
+
+	console.log("Loading channel data");
+  // console.log(req.headers);
+
+  // Verify all requests.
+  const payload = verifyAndDecode(req.headers.authorization);
+
+  // Get the streamer dashboard data  from KlipTok
+  const { channel_id: channelId, opaque_user_id: opaqueUserId } = payload;
+	const channelResponse = await fetch(`https://kliptok.com/api/GetStreamerDashboardByChannelId/${channelId}`);
+
+	res.status(200).send((await channelResponse.json()).mostViewedClippers).end();
 
 }

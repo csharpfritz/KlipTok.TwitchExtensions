@@ -1,7 +1,7 @@
 var token = "";
 var tuid = "";
-var ebs = "https://localhost:8081";
-//var ebs = "https://kliptok-api.azurewebsites.net";
+//var ebs = "https://localhost:8081";
+var ebs = "https://kliptok-api.azurewebsites.net";
 
 // TODO: Cache data.. refresh daily?
 
@@ -10,7 +10,7 @@ if (twitch == null) twitch = { rig: console };
 // because who wants to type this every time?
 var twitch = window.Twitch.ext;
 
-document.querySelectorAll("#pivot a").addEventListener("click", function (e) {
+document.querySelectorAll("#pivot a").forEach(item => item.addEventListener("click", function (e) {
 		var href = e.target.getAttribute("href");
 		if (href.startsWith("#")) {
 				e.preventDefault();
@@ -24,11 +24,17 @@ document.querySelectorAll("#pivot a").addEventListener("click", function (e) {
 
 				e.target.classList.add("active");
 
-				var pivotItem = document.querySelector(href);
-				pivotItem.classList.add("active");
+				document.querySelectorAll(".panel").forEach(item => {
+					if (!item.classList.contains("hidden") ) {
+						item.classList.add("hidden");
+					}
+				})
+
+				var pivotItem = document.getElementById(href.substring(1));
+				pivotItem.classList.remove("hidden");
 				pivot.scrollTop = pivotItem.offsetTop;
 		}
-});
+}));
 
 twitch.onAuthorized(async function(auth) {
     // save our credentials
@@ -55,7 +61,7 @@ twitch.onAuthorized(async function(auth) {
 
 		try {
 
-			var response = await fetch(ebs + "/dashboard", {
+			var response = await fetch(ebs + "/dashboardAll", {
 				method: "GET",
 				// credentials: 'include',
 				// mode: 'no-cors',
@@ -103,6 +109,9 @@ twitch.onAuthorized(async function(auth) {
 			},
 			valueAxis: {
 				visible: false
+			},
+			chartArea: {
+				width: "290px"
 			}
 		});
 		
