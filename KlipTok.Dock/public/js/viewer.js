@@ -89,9 +89,6 @@ twitch.onAuthorized(async function(auth) {
 
 		// Build the day of week chart with kendo
 		$("#panel_clipsbydayofweek").kendoChart({
-			title: {
-				text: "Clips by Day of Week"
-			},
 			legend: {
 				visible: false
 			},
@@ -99,19 +96,35 @@ twitch.onAuthorized(async function(auth) {
 				type: "radarColumn",
 				name: "Day of Week",
 				autoFit: true,
-				color: "#5900db",
-				data: response.clipsByDayOfWeek.map(x => x.count)
+				color: "#FFF",
+				data: response.clipsByDayOfWeek.map(x => x.count),
+				tooltip: {
+					visible: true
+				},
 			}],
 			categoryAxis: {
+				labels: {
+					font: "8px Arial,Helvetica,sans-serif",
+					color: "#FFF"
+				},
 				categories: [
 						"Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
-				]
+				],
+				tooltip: {
+					visible: false,
+					format: "Total clips: {0}",
+				}
 			},
 			valueAxis: {
 				visible: false
 			},
 			chartArea: {
-				width: "290px"
+				background: "#5900db",
+				margin: {
+					top: 0
+				},
+				width: "290px",
+				height: "290px"
 			}
 		});
 		

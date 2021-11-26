@@ -83,7 +83,7 @@
     "installationCount": -42,
     "liveConfigUrl": "",
     "name": "KlipTokDock",
-    "panelHeight": 300,
+    "panelHeight": 400,
     "privacyPolicyUrl": "https://kliptok.com/Privacy",
     "requestIdentityLink": false,
     "requiredBroadcasterAbilities": [],
@@ -105,7 +105,7 @@
     "views": {
       "panel": {
         "viewerUrl": "http://localhost:8080/panel.html",
-        "height": 300,
+        "height": 400,
         "canLinkExternalContent": true
       },
       "config": {
