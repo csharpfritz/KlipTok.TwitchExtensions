@@ -55,12 +55,16 @@
 		}
 
 		.hidden {
-			display: none;
+			display: none!important;
 		}
 
 		.panel { 
 			width: 290px;
 			margin: 5px auto 0;
+		}
+
+		.panel a {
+			color: yellow;
 		}
 
 	</style>
@@ -90,6 +94,18 @@
 
 	<div id="panel_clipsbydayofweek" class="panel hidden">
 
+	</div>
+
+	<div id="panel_noclips" class="panel hidden">
+		<p>We could not detect any clips on KlipTok for this channel.  Please ensure
+			that there are currently clips on Twitch and the channel is opted-in to
+			KlipTok so that we can present information about the clips on this channel.</p>
+		<p>
+			Visit <a href="https://kliptok.com/about" target="_blank">KlipTok.com</a> to learn more about KlipTok.
+			</p>
+			<p>
+			Login to KlipTok and opt-in this channel on it's <a id="noclip_optin" href="https://kliptok.com/foo" target="_blank">channel page.</a>
+		</p>
 	</div>
 
 	<script rel="preload" src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>

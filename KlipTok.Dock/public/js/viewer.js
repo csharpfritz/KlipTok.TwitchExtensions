@@ -1,9 +1,10 @@
 var token = "";
 var tuid = "";
-//var ebs = "https://localhost:8081";
-var ebs = "https://kliptok-api.azurewebsites.net";
+var ebs = "https://localhost:8081";
+// var ebs = "https://kliptok-api.azurewebsites.net";
 
 // TODO: Cache data.. refresh daily?
+var channelName = "";
 
 if (twitch == null) twitch = { rig: console };
 
@@ -24,15 +25,7 @@ document.querySelectorAll("#pivot a").forEach(item => item.addEventListener("cli
 
 				e.target.classList.add("active");
 
-				document.querySelectorAll(".panel").forEach(item => {
-					if (!item.classList.contains("hidden") ) {
-						item.classList.add("hidden");
-					}
-				})
-
-				var pivotItem = document.getElementById(href.substring(1));
-				pivotItem.classList.remove("hidden");
-				pivot.scrollTop = pivotItem.offsetTop;
+				showPanel(href, pivot);
 		}
 }));
 
@@ -52,7 +45,8 @@ twitch.onAuthorized(async function(auth) {
 				}
 			});
 
-			document.getElementById("logo").href = "https://kliptok.com/" + (await response.json()).data[0].display_name;
+			channelName = (await response.json()).data[0].display_name;
+			document.getElementById("logo").href = "https://kliptok.com/" + channelName;
 
 		}
 
@@ -73,9 +67,22 @@ twitch.onAuthorized(async function(auth) {
 		} catch (e) 
 		{
 			twitch.rig.log(e);
+			displayEmptyData(channelName);
+			return;
+		}
+
+		if (response.status != 200) {
+			displayEmptyData(channelName);
+			return;
 		}
 
 		var response = await response.json();
+
+		if (response.mostViewedClippers.length == 0){
+			displayEmptyData(channelName);
+			return;
+		}
+
 		var clippers = response.mostViewedClippers;
 		clippers = clippers.map(c => ({
 			...c, url: c.url || "icon.png"
@@ -129,3 +136,26 @@ twitch.onAuthorized(async function(auth) {
 		});
 		
 });
+
+function showPanel(href, pivot) {
+	document.querySelectorAll(".panel").forEach(item => {
+		if (!item.classList.contains("hidden")) {
+			item.classList.add("hidden");
+		}
+	});
+
+	var pivotItem = document.getElementById(href.substring(1));
+	pivotItem.classList.remove("hidden");
+	pivot.scrollTop = pivotItem.offsetTop;
+}
+
+function displayEmptyData(channelName)
+{
+
+	var link = document.getElementById("noclip_optin");
+	link.href = "https://kliptok.com/" + channelName;
+
+	showPanel("#panel_noclips", document.getElementById("pivot"));
+	document.getElementById("pivot").classList.add("hidden");
+
+}

@@ -1,8 +1,11 @@
 KlipTok is a website that tracks Twitch clips and allows users to search and discover clips from some of their favorite streamers.
 
-To use this extension, the Twitch channel that will host the panel must be opted-in to KlipTok for monitoring.  A user can join their channel to KlipTok by visiting KlipTok.com and logging in with their Twitch account.  Once logged in, they can verify their opted-in status on kliptok.com/status
+To use this extension effectively, the Twitch channel that will host the panel must:
 
-For channels already opted-in to KlipTok, you will be able to see their clips at kliptok.com/CHANNEL_NAME.  In the case of our sample URL, you can see csharpfritz's clips on KlipTok at https://kliptok.com/csharpfritz
+1. Opt-in to KlipTok for monitoring 
+2. Have clips available on Twitch to be interacted with.  
+
+A user can join their channel to KlipTok by visiting KlipTok.com and logging in with their Twitch account.  For channels opted-in to KlipTok, you will be able to see their clips at kliptok.com/CHANNEL_NAME.  In the case of our sample URL, you can see csharpfritz's clips on KlipTok at https://kliptok.com/csharpfritz
 
 No additional configuration is necessary, as the extension will use the hosted channel's id to load relevant statistics to show in the panel.
 
