@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 
 let client_id = 'eakutjhdwh3m1p7vd7uodnvweuhzmz';
-// let ebs_domain = 'https://kliptok-api.azurewebsites.net';
-let ebs_domain = 'https://localhost:8081';
+let ebs_domain = 'https://kliptok-api.azurewebsites.net';
+// let ebs_domain = 'https://localhost:8081';
 let public_folder = __dirname + "/../public/";
 let port = 8080;
 

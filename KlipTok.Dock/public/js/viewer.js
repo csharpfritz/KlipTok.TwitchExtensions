@@ -1,7 +1,7 @@
 var token = "";
 var tuid = "";
-var ebs = "https://localhost:8081";
-// var ebs = "https://kliptok-api.azurewebsites.net";
+// var ebs = "https://localhost:8081";
+var ebs = "https://kliptok-api.azurewebsites.net";
 
 // TODO: Cache data.. refresh daily?
 var channelName = "";
